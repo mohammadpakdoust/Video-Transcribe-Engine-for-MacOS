@@ -249,7 +249,7 @@ class AppBase:
 
             if not Path(MODEL_PATH).exists():
                 raise FileNotFoundError(
-                    f"Model not found:\n{MODEL_PATH}\n\nTip: put ggml-medium.en.bin in ~/whisper-models/"
+                    f"Model not found:\n{MODEL_PATH}\n\nTip: put ggml-medium.bin in ~/whisper-models/"
                 )
 
             inp = self.selected_file
@@ -455,7 +455,7 @@ class App(tk.Tk, AppBase):
         tk.Label(status_row, text="Language:").pack(side="right", padx=(10, 5))
         self.lang_var = tk.StringVar(value="auto")
         self.lang_combo = ttk.Combobox(status_row, textvariable=self.lang_var, width=10, state="readonly")
-        self.lang_combo['values'] = ("auto", "fa", "en", "fa", "de", "fr", "es", "it", "ja", "ko", "zh")
+        self.lang_combo['values'] = ("auto", "fa", "en", "de", "fr", "es", "it", "ja", "ko", "zh")
         self.lang_combo.pack(side="right")
 
         # Progress bar

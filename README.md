@@ -1,117 +1,87 @@
-# Local Whisper — macOS Transcription App
+# Video-Transcribe-Engine-for-MacOS
 
-**By Mohammad Pakdoust**
-
-A native macOS desktop app that transcribes any video or audio file locally using [whisper.cpp](https://github.com/ggerganov/whisper.cpp) and Metal GPU acceleration. No cloud, no API keys — everything runs on your machine.
+A high-performance, local transcription solution for macOS. Leveraging `whisper.cpp` and Metal GPU acceleration, this tool provides a seamless native experience for transcribing video and audio files with zero cloud dependency.
 
 ---
 
-## Features
+## 🚀 Key Features
 
-- 🎙️ **Local transcription** — powered by `whisper.cpp` (Metal GPU on Apple Silicon)
-- 📁 **Drag & Drop** — drop any media file anywhere on the window
-- 📂 **File picker** — classic open-file dialog as an alternative
-- 📊 **Real-time progress** — determinate progress bar during FFmpeg conversion, animated bar during transcription
-- ❌ **Cancel button** — actually stops the running process immediately
-- 📝 **Two output formats** — `.txt` (clean text) and `.srt` (subtitles with timestamps)
-- 📂 **Open Output Folder** — one click to reveal results in Finder
-- 🧹 **Auto-cleanup** — temporary WAV file deleted after transcription (optional)
+- **Native macOS Experience:** Smooth, PyObjC-based drag-and-drop interface.
+- **Hardware Accelerated:** Optimized for Apple Silicon using Metal for ultra-fast transcription.
+- **Multilingual Support:** Powered by Whisper's medium model, supporting 99+ languages with automatic detection.
+- **Privacy First:** 100% offline. No data ever leaves your machine.
+- **Pro Outputs:** Automatically generates formatted `.txt` and timestamped `.srt` subtitles.
+- **One-Click Setup:** Fully automated dependency management for Homebrew, FFmpeg, and Python.
+
+## 🛠 Tech Stack
+
+- **Core:** [whisper.cpp](https://github.com/ggerganov/whisper.cpp) (C/C++ foundation)
+- **UI:** Python 3 + Tkinter (themed for macOS)
+- **Integration:** PyObjC for native macOS window handling
+- **Processing:** FFmpeg for robust media stream extraction
 
 ---
 
-## Requirements
+## 📦 Requirements
 
-### Homebrew packages
+- **macOS** (Optimized for Apple Silicon / M1, M2, M3)
+- **Homebrew** (External package manager)
+- **Python 3** (Standard with macOS or via Homebrew)
+
+---
+
+## ⚡️ Quick Start (Recommended)
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/mohammadpakdoust/whisper-for-videos.git
+    cd whisper-for-videos
+    ```
+
+2.  **Launch the App:**
+    Double-click `Whisper.command` in the Finder.
+
+    > [!IMPORTANT]
+    > **First-Time Setup:** The first time you run the app, it will automatically download the multilingual AI model (~1.4 GB) and install necessary components (FFmpeg, whisper-cpp). Please keep the terminal window open until the GUI appears.
+
+3.  **Transcribe:**
+    Drag any video or audio file into the window and click **Start**.
+
+---
+
+## 🖥 Manual / CLI Usage
+
+If you prefer using the terminal or want to integrate transcription into your scripts:
+
 ```bash
-brew install ffmpeg whisper-cpp
+./run.sh path/to/media_file.mp4
 ```
 
-### Whisper model
-Download the model and place it at `~/whisper-models/ggml-medium.en.bin`:
-```bash
-mkdir -p ~/whisper-models
-curl -L -o ~/whisper-models/ggml-medium.bin \
-  https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-medium.bin
-```
-> `ggml-medium.bin` is the multilingual model — supports 99 languages including English, Persian, Arabic, French, Spanish, and more. Language is auto-detected.
-
-### Python packages
-```bash
-pip install pyobjc-framework-Cocoa
-```
-> Required for native macOS drag-and-drop support.
+This will use the same optimized pipeline to generate transcriptions in the source file's directory.
 
 ---
 
-## Getting Started
+## 📊 Supported Formats
 
-### Option 1 — Double-click (recommended)
-Double-click **`Whisper.command`** in Finder. A Terminal window opens and the GUI launches automatically.
-
-> **First run only:** macOS may block the script. Right-click → Open → Open to allow it.
-
-### Option 2 — Terminal
-```bash
-python3 transcribe_whisper_cli.py
-```
-
-### Option 3 — Terminal with file pre-selected
-```bash
-./run.sh /path/to/your/video.mp4
-```
-The GUI opens with the file already loaded and ready to start.
+| Category | Formats |
+| :--- | :--- |
+| **Video** | `.mp4`, `.mov`, `.webm`, `.mkv` |
+| **Audio** | `.mp3`, `.m4a`, `.wav`, `.aac`, `.flac`, `.ogg` |
 
 ---
 
-## Workflow
+## ⚖️ License
 
-1. **Drop** a file onto the window (or click **Choose File…**)
-2. Click **Start**
-3. Watch the progress bar:
-   - `Converting to WAV…` — FFmpeg extracts 16 kHz mono audio
-   - `Transcribing (GPU / Metal)…` — whisper.cpp processes the audio
-4. A completion dialog confirms the output location
-5. Click **Open Output Folder** to view your `.txt` and `.srt` files
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Output
+## 👤 Author
 
-Files are saved **in the same folder as the input file**:
-
-| File | Contents |
-|---|---|
-| `filename.txt` | Full transcript as plain text |
-| `filename.srt` | Subtitles with timestamps for video players |
+**Mohammad Pakdoust**  
+[GitHub Profile](https://github.com/mohammadpakdoust)
 
 ---
 
-## Configuration
-
-Edit the top of `transcribe_whisper_cli.py` to customise:
-
-```python
-MODEL_PATH = os.path.expanduser("~/whisper-models/ggml-medium.en.bin")
-DELETE_WAV_AFTER_DEFAULT = True   # set False to keep the intermediate WAV
-WHISPER_OUTPUT_FLAGS = ["-otxt", "-osrt", "-pp"]  # output formats
-```
-
-### Supported input formats
-`mp4` · `mov` · `m4a` · `mp3` · `wav` · `aac` · `flac` · `ogg` · `webm`
-
----
-
-## Project Structure
-
-```
-Whisper for videos/
-├── Whisper.command              # Double-click launcher (opens Terminal + GUI)
-├── run.sh                       # Shell launcher with optional file argument
-└── transcribe_whisper_cli.py    # Main GUI application
-```
-
----
-
-## License
-
-MIT — free to use, modify, and distribute.
+> [!NOTE]  
+> This project was developed to showcase local AI integration on macOS. It focuses on practical usability, hardware optimization, and high-quality transcription outputs.

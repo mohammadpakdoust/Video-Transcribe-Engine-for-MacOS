@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # ===== CONFIG =====
-SCRIPT_PATH="/Users/mohammadpakdoust/Study/Whisper for videos/transcribe_whisper_cli.py"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_PATH="$SCRIPT_DIR/transcribe_whisper_cli.py"
 
-# Default model (change if needed)
-MODEL="ggml-medium.en"
+# Default model
+MODEL_NAME="ggml-medium"
 
 # ===== CHECK INPUT =====
 if [ -z "$1" ]; then
@@ -21,7 +22,7 @@ if [ ! -f "$INPUT_FILE" ]; then
 fi
 
 echo "🎧 Transcribing: $INPUT_FILE"
-echo "🧠 Model: $MODEL"
+echo "🧠 Model: $MODEL_NAME"
 echo "--------------------------------"
 
 python3 "$SCRIPT_PATH" "$INPUT_FILE"
