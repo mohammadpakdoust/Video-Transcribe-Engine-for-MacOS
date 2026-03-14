@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# macOS
+.DS_Store
+
+# Project specific
+*__16k_mono.wav
+/tmp/whisper_uploads/
