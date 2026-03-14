@@ -227,6 +227,7 @@ class AppBase:
             whisper_cli,
             "-f", str(wav_path),
             "-m", MODEL_PATH,
+            "-l", self.lang_var.get(),
             "-of", str(out_prefix),
             *WHISPER_OUTPUT_FLAGS,
         ]
@@ -443,9 +444,19 @@ class App(tk.Tk, AppBase):
         self.keep_wav_var = tk.BooleanVar(value=not DELETE_WAV_AFTER_DEFAULT)
         tk.Checkbutton(btn_row, text="Keep WAV file", variable=self.keep_wav_var).pack(side="left", padx=12)
 
-        # Status
+        # Status area
+        status_row = tk.Frame(self)
+        status_row.pack(fill="x", padx=14, pady=(12, 0))
+        
         self.status_var = tk.StringVar(value="Ready.")
-        tk.Label(self, textvariable=self.status_var, anchor="w").pack(fill="x", padx=14, pady=(12, 0))
+        tk.Label(status_row, textvariable=self.status_var, anchor="w").pack(side="left")
+        
+        # Language Selector (Right-aligned)
+        tk.Label(status_row, text="Language:").pack(side="right", padx=(10, 5))
+        self.lang_var = tk.StringVar(value="auto")
+        self.lang_combo = ttk.Combobox(status_row, textvariable=self.lang_var, width=10, state="readonly")
+        self.lang_combo['values'] = ("auto", "fa", "en", "fa", "de", "fr", "es", "it", "ja", "ko", "zh")
+        self.lang_combo.pack(side="right")
 
         # Progress bar
         pb = tk.Frame(self)

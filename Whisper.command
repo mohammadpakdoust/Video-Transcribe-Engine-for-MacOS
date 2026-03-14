@@ -43,7 +43,14 @@ fi
 echo "✅ Environment is ready. Launching app..."
 echo "------------------------------------------"
 
+# Launch the app in the background and detach it
 SCRIPT="$DIR/transcribe_whisper_cli.py"
+(
+  /usr/bin/env python3 "$SCRIPT" &
+)
 
-# Use python3 from Homebrew PATH
-exec /usr/bin/env python3 "$SCRIPT"
+# Give it a brief moment to start, then close the terminal window
+osascript -e 'tell application "Terminal" to close (every window whose name contains "Whisper.command")' &
+exit
+
+
